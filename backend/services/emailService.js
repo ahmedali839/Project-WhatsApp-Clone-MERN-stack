@@ -23,7 +23,6 @@
 // });
 
 // const sendOtpToEmail = async (email, otp) => {
-//     console.log("running before inside sentotptoemail")
 
 //     const html = `
 //     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
@@ -54,8 +53,6 @@
 //         subject: "User Whatsapp verification code",
 //         html
 //     })
-//     console.log("running after inside sentotptoemail")
-
 // }
 
 // export default sendOtpToEmail; 
@@ -68,54 +65,22 @@
 
 
 
-
-
-
-
-
-
-// Filename: emailService.js (or similar)
-
-import nodemailer from "nodemailer";
+// Filename: emailService.js
+import sgMail from "@sendgrid/mail";
 import dotenv from "dotenv";
+dotenv.config(); 
 
-// Load environment variables from .env file
-dotenv.config();
 
-// --- Nodemailer Transporter Configuration ---
-// This configuration connects to the standard Gmail SMTP server over Port 587 (STARTTLS).
-const transporter = nodemailer.createTransport({
-    // Using 'service' can sometimes simplify configuration, but using 'host' and 'port' is often more explicit and reliable.
-    // We'll replace 'service: "gmail"' with the specific host for better control.
-    host: 'smtp.gmail.com', // ⬅️ CORRECTED: Use the actual SMTP server for sending emails
-    port: 587,              // ⬅️ CORRECTED: Standard port for STARTTLS
-    secure: false,          // ⬅️ CRUCIAL: Must be false for port 587 (uses STARTTLS)
-    auth: {
-        user: process.env.EMAIL_NAME,
-        // Remember to use an App Password if you have 2FA enabled on your Google account!
-        pass: process.env.EMAIL_PASS
-    },
-    // Adding a timeout can help prevent endless waiting, though ETIMEDOUT usually means a firewall issue.
-    // Optional: timeout: 10000 
-});
-
-// Verification to check if the connection to the SMTP server is successful
-transporter.verify((error, success) => {
-    if (error) {
-        // This will now log if the connection fails due to auth or network issues.
-        console.error("Gmail services connection failed:", error.message);
-    } else {
-        console.log("Gmail services connection Successfully working (Ready to send emails)");
-    }
-});
+// ✅ Set your SendGrid API key from environment variables
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 /**
- * Sends a one-time password (OTP) to the specified email address.
+ * Sends a one-time password (OTP) to the specified email address using SendGrid.
  * @param {string} email - The recipient's email address.
  * @param {string} otp - The one-time password.
  */
 const sendOtpToEmail = async (email, otp) => {
-    console.log("Attempting to send OTP via email...");
+    console.log("Attempting to send OTP via SendGrid...");
 
     const html = `
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
@@ -133,18 +98,23 @@ const sendOtpToEmail = async (email, otp) => {
     </div>
   `;
 
+    const msg = {
+        to: email,
+        from: {
+            name: "WhatsApp Web Verification",
+            email: process.env.SENDER_EMAIL, // must be verified in SendGrid
+        },
+        subject: "User WhatsApp Verification Code",
+        html: html,
+    };
+
     try {
-        const info = await transporter.sendMail({
-            from: `WhatsApp Security <${process.env.EMAIL_NAME}>`, // Improved 'from' field format
-            to: email,
-            subject: "User WhatsApp Verification Code",
-            html: html
-        });
-        console.log("OTP Email sent successfully. Message ID:", info.messageId);
+        const response = await sgMail.send(msg);
+        console.log("✅ OTP Email sent successfully via SendGrid!");
+        console.log("Response status:", response[0].statusCode);
+        return response;
     } catch (error) {
-        // Log the actual error when sending fails
-        console.error("Server error: Failed to send email.", error);
-        // Important: Re-throw the error so the calling function can handle it
+        console.error("❌ Failed to send email via SendGrid:", error.response?.body || error);
         throw new Error("Failed to send OTP email.");
     }
 };
