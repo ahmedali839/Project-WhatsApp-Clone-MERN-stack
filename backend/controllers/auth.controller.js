@@ -45,7 +45,7 @@ export const sendOtp = async (req, res) => {
         return response(res, 200, "otp sent successfully to your Phone Number");
     } catch (error) {
         console.error("Server error", error);
-        return response(res, 500, "Internally Server error.",)
+        return response(res, 500, "Internally Server error.",error)
     }
 }
 
