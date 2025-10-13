@@ -21,6 +21,7 @@ transporter.verify((error, success) => {
 });
 
 const sendOtpToEmail = async (email, otp) => {
+    console.log("running before inside sentotptoemail")
 
     const html = `
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
@@ -51,6 +52,8 @@ const sendOtpToEmail = async (email, otp) => {
         subject: "User Whatsapp verification code",
         html
     })
+    console.log("running after inside sentotptoemail")
+
 }
 
 export default sendOtpToEmail; 

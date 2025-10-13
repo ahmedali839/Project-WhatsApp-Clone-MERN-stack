@@ -25,6 +25,7 @@ export const sendOtp = async (req, res) => {
             user.emailOtpExpiry = expiry;
             await user.save();
             await sendOtpToEmail(email, otp);
+            console.log("running after sentotptoemail")
 
             return response(res, 200, `otp sent successfully to your email: ${email}`)
         }
