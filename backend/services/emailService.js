@@ -53,5 +53,7 @@ const sendOtpToEmail = async (email, otp) => {
     })
 }
 
+console.log("email:", process.env.EMAIL_NAME)
+console.log("ps:", process.env.EMAIL_PASS)
 
 export default sendOtpToEmail; 
