@@ -382,59 +382,6 @@ const Login = () => {
                 )}
 
 
-                {/* {step === 2 && (
-                    <form onSubmit={handleOtpSubmit(onOtpSubmit)}>
-                        <p className={`text-center ${theme === "dark" ? "text-gray-300" : "text-gray-600"} mb-4`}>
-                            Plese enter the 6 digit otp send to your {userPhoneData.phoneSuffix ? userPhoneData?.phoneSuffix : "Email"} {userPhoneData.phoneNumber && userPhoneData?.phoneNumber}
-                        </p>
-
-                        <div className={`flex justify-between`}>
-                            {
-                                otp.map((digit, index) => (
-                                    <input
-                                        type="text"
-                                        key={`otp-${index}`}
-                                        maxLength={1}
-                                        value={digit}
-                                        onChange={(e) => { handleOtpChange(index, e.target.value) }}
-                                        className={`w-10 h-12 ${theme === "dark" ? "bg-gray-700 border-gray-600 text-white" : "bg-gray-300 text-gray-800 border-gray-200"} my-4 mx-auto rounded-md text-center focus:outline-none focus:ring-2 focus:border-green-500 ${otpErrors.otp ? "border-red-500" : ""} `}
-                                    />
-                                ))}
-                        </div>
-
-                        {otpErrors.otp && otpErrors.otp.message}
-
-                        <button
-                            type='submit'
-                            className='w-full py-2 rounded-md text-white bg-green-500 hover:bg-green-600 transition'
-                        > {isLoading ? <Spinner /> : "Continue"}</button>
-
-                        <button
-                            type='button'
-                            onClick={handleBack}
-                            className={`w-full mt-2 py-2  rounded-md text-white bg-gray-2 00 ${theme === "dark" ? "bg-gray-600 text-gray-300 hover:bg-gray-700" : "bg-gray-300 text-gray-700 hover:bg-gray-300"}  flex items-center justify-center transition rounded-md`}
-                        >  <FaArrowLeft className='mr-2' /> Wrong Number ? Go Back</button>
-
-
-
-
-
-                    </form>
-                )} */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 {step === 2 && (
                     <form onSubmit={handleOtpSubmit(onOtpSubmit)}>
                         <p
@@ -442,7 +389,7 @@ const Login = () => {
                                 } mb-4`}
                         >
                             Please enter the 6 digit OTP sent to your{" "}
-                            {userPhoneData.phoneSuffix ? userPhoneData.phoneSuffix : "Email"}{" "}
+                            {userPhoneData.phoneSuffix ? (userPhoneData.phoneSuffix) : (<>Email,<br />must check spam folders for otp</>)}
                             {userPhoneData.phoneNumber && userPhoneData.phoneNumber}
                         </p>
 
@@ -569,8 +516,7 @@ const Login = () => {
 
             </motion.div >
 
-
-        </div >
+        </div>
     )
 
 
