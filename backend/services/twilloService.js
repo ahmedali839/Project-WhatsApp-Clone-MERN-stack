@@ -88,12 +88,6 @@ if (!TWILLO_ACC_SID || !TWILLO_AUTH_TOKEN || !TWILLO_SERVICE_SID) {
     // optionally: throw new Error("Twilio credentials missing");
 }
 
-console.log(
-    TWILLO_ACC_SID,
-    TWILLO_AUTH_TOKEN,
-    TWILLO_SERVICE_SID
-)
-
 const client = twilio(TWILLO_ACC_SID, TWILLO_AUTH_TOKEN);
 
 export const sendOtpToPhoneNumber = async (phoneNumber) => {

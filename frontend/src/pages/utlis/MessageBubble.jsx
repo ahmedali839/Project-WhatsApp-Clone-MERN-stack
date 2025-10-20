@@ -21,6 +21,18 @@ const MessageBubble = ({ message, theme, currentUser, onReact, deleteMessage }) 
 
     const isUserMessage = message.sender._id === currentUser?._id;
 
+
+    if (!message || Object.keys(message).length === 0) {
+        return (
+            <div className="flex justify-center items-center p-4 text-gray-500">
+                {console.log("here not messages")}
+
+                <p className="text-sm italic">No messages yet — start a conversation!</p>
+            </div>
+        )
+    }
+
+
     const bubbleClass = isUserMessage ? `chat-end` : `chat-start`
 
     const bubbleContentClass = isUserMessage

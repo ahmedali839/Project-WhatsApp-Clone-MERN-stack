@@ -14,9 +14,7 @@ cloudinary.config({
 })
 
 export const uploadFileToCloudinary = (file) => {
-    console.log("before file")
     console.log(file)
-    console.log("after file")
 
     const options = {
         resource_type: file.mimetype.startsWith("video") ? "video" : "image"

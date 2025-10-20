@@ -82,7 +82,8 @@ const Sidebar = () => {
       {/* for profile */}
       <Link
         to={"/user-profile"}
-        className={`${isMobile ? "" : "mb-8"} ${activeTab === "profile" && `w-13 h-15 object-cover bg-gray-300 shadow-sm p-3 rounded-full`} focus:outline-none `}
+        // className={`${isMobile ? "" : "mb-8"} ${activeTab === "profile" && `w-13 h-15 object-cover bg-gray-300 shadow-sm p-3 rounded-full`} focus:outline-none `}
+        className={`${isMobile ? "" : "mb-8"} ${!isMobile && activeTab === "profile" && `w-10 h-10 object-cover shadow-sm px-2 py-1 rounded-full bg-gray-300`} ${activeTab === "profile" && `w-13 h-15 object-cover bg-gray-300 shadow-sm p-3 rounded-full`} focus:outline-none `}
       >
 
         {user?.profilePicture ? (
